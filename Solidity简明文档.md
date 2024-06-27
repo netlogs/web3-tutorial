@@ -1,5 +1,7 @@
 # Solidity简明教程
 
+本教程适用于有语言基础，速查或者快速入门。
+
 ## 版权许可标识
 
 ~~~ solidity
@@ -128,7 +130,7 @@ contract ForAndWhile {
 
 和C语言一样，同时要注意控制循环次数，太多的循环会导致gas费用的高昂
 
-## 错误
+## Error
 
 ~~~ solidity
 // SPDX-License-Identifier: MIT
@@ -406,6 +408,48 @@ contract Structs {
 
 ## 枚举
 
+~~~ solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.26;
+
+//结合数组和mapping
+contract Enums {
+    enum Status {
+        None,
+        Pending,
+        Shipped,
+        Completed,
+        Rejected,
+        Canceled
+    }
+
+    Status public status;
+
+    struct Order {
+        address buyer;
+        Status status;
+    }
+
+    Order[] public orders;
+
+    function get() external view returns (Status) {
+        return status;
+    }
+
+    function set(Status _status) external {
+        status = _status;
+    }
+
+    function ship() external {
+        status = Status.Shipped;
+    }
+
+    function reset() external {
+        delete status; //枚举类型的默认值是第一个字段，本例为"None"
+    }
+}
+~~~
+
 
 
 ## 总结
@@ -442,26 +486,6 @@ contract Owner {
     }
 }
 ~~~
-
-
-
-
-
- 
-
-函数：
-
-view pure
-
-view：只读方法，不过会读取一些变量的值，状态变量，或者全局变量，pure不能读取变量
-
-外部可视：在合约内部的其他函数不可以调用，只能被外部读取
-
-~~~ solidity
-function xxx() external
-~~~
-
-web3 预言机是什么？
 
 ## 在线IDE
 
